@@ -1,0 +1,130 @@
+## Executive Summary — Marketing Campaign Performance Analysis
+
+### 1. Project objective
+
+The objective of this project was to assess marketing campaign performance across channels, campaign types and active status; understand engagement and conversion patterns; examine spend distribution and campaign timing; and identify data-quality limitations that could affect business reporting.
+
+The analysis followed an evidence-based workflow: profile the original data, clean and standardize fields, preserve unresolved values for audit, calculate campaign KPIs, aggregate performance metrics, and validate the resulting summaries.
+
+After duplicate handling and campaign ID resolution, the dataset contained **2,000 unique campaigns**.
+
+### 2. Channel performance
+
+**Which channel generated the most clicks?**
+
+Facebook generated the most clicks, with **623,589 clicks** across 401 campaigns. TikTok followed with 617,274 clicks across 412 campaigns. Facebook therefore had the highest recorded click volume, although its lead over TikTok was relatively small.
+
+**Which channel had the highest aggregate CTR?**
+
+Among the named marketing channels, Facebook recorded the highest aggregate click-through rate (CTR) at **3.06%**.
+
+The Unknown channel group recorded 3.25%, but these 100 campaigns lack a reliably identified channel. This group should be investigated separately rather than treated as a marketing channel for budget-allocation decisions.
+
+**Which channel had the highest aggregate conversion rate?**
+
+Among the named channels, Google Ads had the highest aggregate conversion rate at **11.31%**, followed by Email at 11.18% and Facebook at 11.15%.
+
+The Unknown group recorded 11.78%, but its channel identity is unresolved. This result should not be used to select a marketing channel without investigating the underlying records.
+
+**Which channel had the lowest cost per conversion?**
+
+Among the named channels, Instagram had the lowest recorded cost per conversion at **11.13 spend units per recorded conversion**, followed by Google Ads at 11.30 and TikTok at 11.38.
+
+Email had the highest recorded cost per conversion at 35.09, followed by Facebook at 25.56. These values are provisional because the source data does not establish whether spend values are comparable across currencies.
+
+**Are the differences meaningful when campaign volume and conversion-data completeness are considered?**
+
+The main channels had broadly similar campaign volumes, ranging from 354 Google Ads campaigns to 412 TikTok campaigns. Conversion values were available for:
+
+- Facebook: 362 of 401 campaigns (90.27%)
+- TikTok: 372 of 412 campaigns (90.29%)
+- Email: 341 of 375 campaigns (90.93%)
+- Google Ads: 319 of 354 campaigns (90.11%)
+- Instagram: 314 of 358 campaigns (87.71%)
+
+Instagram had the highest missing-conversion rate among the named channels, at 12.29%. This limits confidence in comparisons involving its conversion rate and cost per conversion.
+
+These are descriptive differences, not evidence of statistical significance or incremental campaign impact. The analysis does not establish whether the observed differences would persist after accounting for campaign objectives, audience composition, attribution, or other factors.
+
+### 3. Campaign type and status
+
+**Which campaign type generated the most recorded conversions?**
+
+Launch campaigns generated the most recorded conversions, with **86,477 conversions across 506 campaigns**.
+
+The remaining campaign types recorded:
+
+- Winter: 85,047 conversions across 512 campaigns
+- BlackFriday: 82,282 conversions across 503 campaigns
+- Summer: 81,257 conversions across 479 campaigns
+
+**How did CTR, conversion rate and cost per conversion differ across campaign types?**
+
+| Campaign type | Aggregate CTR | Aggregate conversion rate | Cost per recorded conversion |
+|---|---:|---:|---:|
+| Launch | 3.04% | 11.62% | 22.05 |
+| Winter | 3.01% | 11.09% | 16.97 |
+| BlackFriday | 2.99% | 10.78% | 11.71 |
+| Summer | 3.00% | 11.16% | 23.64 |
+
+Launch campaigns had the highest CTR and conversion rate and generated the most recorded conversions. However, BlackFriday campaigns had the lowest cost per recorded conversion. Summer campaigns had the highest cost per recorded conversion.
+
+This suggests that engagement, conversion volume and cost efficiency do not necessarily identify the same best-performing campaign type. The results do not prove that campaign type alone caused these differences.
+
+**Did active and inactive campaign groups show different aggregate performance?**
+
+The notebook's status summary recorded the following results:
+
+| Metric | Active (Yes) | Inactive (No) |
+|---|---:|---:|
+| Campaigns | 1,182 | 818 |
+| Clicks | 1,774,125 | 1,228,350 |
+| Recorded conversions | 198,611 | 136,452 |
+| Aggregate CTR | 3.02% | 3.00% |
+| Aggregate conversion rate | 11.19% | 11.11% |
+| Cost per recorded conversion | 13.60 | 25.90 |
+
+The active group had more campaigns, clicks and recorded conversions, along with a slightly higher aggregate CTR and conversion rate and a lower cost per recorded conversion.
+
+However, active and inactive campaigns may differ in their duration, objectives, budgets and lifecycle stage. These are descriptive comparisons and do not demonstrate that active status itself caused better performance.
+
+### 4. Spend and timing
+
+**What does the spend distribution tell us about typical campaign spend?**
+
+For the 1,981 campaigns with successfully parsed, non-negative spend, the median spend was **1,455.43**, while the mean was **3,147.30**.
+
+The mean being substantially higher than the median, together with a maximum of 500,000, indicates a strongly right-skewed spend distribution. Most campaigns had considerably lower spend than the average, while a small number of high-spend records pulled the mean upward.
+
+The 95th percentile was 5,308.23. These amounts are expressed in source spend units because currency comparability has not been established.
+
+**How many unusually high-spend campaigns were flagged for investigation?**
+
+The interquartile-range (IQR) method identified **73 campaigns** above the upper fence of 5,645.32.
+
+Five records had spend values of 500,000, making them particularly important to verify. However, an IQR outlier is an investigation candidate, not automatically an error. These records should be checked against source transactions, currency conventions and campaign budgets before any exclusion decision is made.
+
+**What patterns appear in monthly campaign launches and valid campaign duration?**
+
+Campaign launches were most numerous in October and December 2023, with **186 campaigns in each month**. June recorded 182 launches. January 2024 recorded only six campaigns.
+
+The recorded launch period runs from January 2023 through January 2024. The low count in January 2024 may reflect incomplete coverage of that month rather than a genuine decline in campaign activity.
+
+Among the 1,922 campaigns with valid, non-negative durations, the median duration was **16 days**. Median duration was 16 days for BlackFriday and Winter campaigns and 15 days for Launch and Summer campaigns.
+
+There were 78 campaigns whose end dates preceded their start dates. Their durations should not be treated as valid. Monthly launch counts describe recorded start dates and should be interpreted cautiously until unresolved date anomalies are reviewed.
+
+### 5. Data-quality limitations
+
+- **Missing conversions:** 200 campaigns (10.00% of the 2,000-campaign dataset) have missing conversion values. These represent unknown outcomes, not confirmed zero conversions. Conversion-related metrics may therefore be incomplete or biased.
+- **Unknown channels:** 100 campaigns remain classified as Unknown after standardizing channel values. Their source records should be reviewed before making channel-specific recommendations.
+- **Negative spend:** 19 negative spend values were retained in the audit fields and excluded from spend-based analytical calculations. Their meaning should be confirmed with the source-data owner.
+- **Date anomalies:** 78 campaigns have end dates earlier than start dates. These records were flagged rather than assumed to have corrected dates. Their original dates should be verified before production duration reporting.
+- **Currency comparability:** The source does not establish whether all spend values use the same currency or unit. Cost comparisons remain provisional until this is confirmed.
+- **High-spend outliers:** 73 campaigns exceeded the IQR upper fence. These values require investigation rather than automatic removal.
+- **Funnel consistency:** The notebook's saved checks reported zero campaigns with the tested funnel or negative-count anomalies. This is a positive result for those specific checks, but it does not establish that every source record is correct.
+- **Interpretation:** The analysis is descriptive. It does not establish causality, statistical significance or incremental marketing lift.
+
+### 6. Recommendations
+
+1. **Validate conversion tracking.** Investigate the 200 missing
